@@ -119,7 +119,7 @@ Time to configure chrony:
 ```vi /etc/chrony/chrony.conf```
 Add the following:
 ```
-# optional but I prefer to use NIST time servers over the pool servers that come default on the OS
+# optional but I prefer to use NIST time servers over the pool servers that come preconfigured on the base OS 
 server time-a-b.nist.gov 
 server time-e-wwv.nist.gov
 
