@@ -123,7 +123,7 @@ Add the following:
 server time-a-b.nist.gov 
 server time-e-wwv.nist.gov
 
-#config to use pps as a time source pulled from https://chrony.tuxfamily.org/faq.html
+#config to use pps as a time source. Pulled from https://chrony.tuxfamily.org/faq.html
 refclock PPS /dev/pps0 lock NMEA refid GPS
 refclock SHM 0 offset 0.5 delay 0.1 refid NMEA # This is because the gpsd packaged version in raspian is 3.22 documentation above states this is what you need to put in for versions of gpsd below 3.25
 ```
@@ -152,8 +152,19 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 Strange occurance is the NMEA column displays as in error. Technically not in use. 
 
 
+I added the following at the bottom of ```/etc/chrony/chrony.conf```:
 
+```allow 192.168.0.0/24```
 
+I setup a PC to talk to my RPI server at ```192.168.0.3```
+
+Here are the results:
+```
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^* 192.168.0.3                   1   7   177    53    +11us[-4515ns] +/-  275us
+^- time-a-b.nist.gov             1  10   377   138   -993us[-1008us] +/-   20ms
+```
 
 
 
