@@ -114,6 +114,46 @@ source 0 - assert 1685342065.000001507, sequence: 59726 - clear  0.000000000, se
 source 0 - assert 1685342066.000001593, sequence: 59727 - clear  0.000000000, sequence: 0
 ```
 
+Time to configure chrony:
+
+```vi /etc/chrony/chrony.conf```
+Add the following:
+```
+# optional but I prefer to use NIST time servers over the pool servers that come default on the OS
+server time-a-b.nist.gov 
+server time-e-wwv.nist.gov
+
+#config to use pps as a time source pulled from https://chrony.tuxfamily.org/faq.html
+refclock PPS /dev/pps0 lock NMEA refid GPS
+refclock SHM 0 offset 0.5 delay 0.1 refid NMEA # This is because the gpsd packaged version in raspian is 3.22 documentation above states this is what you need to put in for versions of gpsd below 3.25
+```
+```
+$ gpsd -V
+gpsd: 3.22 (revision 3.22)
+```
+
+Save the file and then run the following:
+
+```sudo systemctl enable chronyd && sudo systemctl start chronyd```
+
+then run the following:
+
+```chronyc sources``` or ``` watch -n1 chronyc sources``` to watch it update in "real-time".
+After about 30sec chrony should start receiving the PPS signal the GPS signal. As shown below.
+
+```
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+#* GPS                           0   4   377    10   +101ns[ +140ns] +/-  183ns
+#x NMEA                          0   4   377    12    +91ms[  +91ms] +/-   51ms
+^- time-a-b.nist.gov             1   6    77    14  +1041us[+1041us] +/-   20ms
+^- time-e-wwv.nist.gov           1   6    77    14   -292us[ -292us] +/-   21ms
+```
+Strange occurance is the NMEA column displays as in error. Technically not in use. 
+
+
+
+
 
 
 
