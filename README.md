@@ -2,6 +2,8 @@
 
 Hardware needed: 
 
+Dupont cables
+
 Raspberry Pi
 
 NEO GPS module as seen below:
@@ -44,12 +46,26 @@ reboot # if updates were installed and applied
 sudo apt install pps-tools gpsd gpsd-clients chrony libcap-dev
 ```
 Power off the RPI and attach the GPS Module to the following Pin outs on the RPI:
-
+```
 GPS module        RPI
 +---------------------+
-VCC              Pin 4 5V power
-GND              Pin 6 GND
-TXD              Pin 10 GPIO 15 UART RX
-RXD              Pin 8 GPIO 14 UART TX
-PPS              Pin 12 GPIO 18 PCM CLOCK
 
+VCC              Pin 4 5V power
+
+GND              Pin 6 GND
+
+TXD              Pin 10 GPIO 15 UART RX
+
+RXD              Pin 8 GPIO 14 UART TX
+
+PPS              Pin 12 GPIO 18 PCM CLOCK
+```
+
+Power on the Pi and run the following command to ensure a PPS signal is detected by the kernel:
+```
+$ sudo dmesg | grep pps
+[    0.194625] pps_core: LinuxPPS API ver. 1 registered
+[    0.194664] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    8.108780] pps pps0: new PPS source pps@12.-1
+[    8.111341] pps pps0: Registered IRQ 185 as PPS source
+```
