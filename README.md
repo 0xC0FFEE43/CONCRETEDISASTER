@@ -93,6 +93,28 @@ Enable the service and start it:
 
 ``` sudo systemctl enable gpsd && sudo systemctl start gpsd```
 
+If all goes well you can verify the gps in action by running: ``` cgps or gpsmon ```
+
+In ```gpsmon``` you will see the following ```TOFF:  0.401942753       PPS:  0.000018718``` if there's a PPS value then PPS should be working if not it will be blank. This aides in troubleshooting.
+
+Another test is running the following: ``` sudo ppstest /dev/pps0 ```
+Expected output is the following(It will output every second): 
+```
+$ sudo ppstest /dev/pps0
+trying PPS source "/dev/pps0"
+found PPS source "/dev/pps0"
+ok, found 1 source(s), now start fetching data...
+source 0 - assert 1685342059.000001866, sequence: 59719 - clear  0.000000000, sequence: 0
+source 0 - assert 1685342060.000028904, sequence: 59721 - clear  0.000000000, sequence: 0
+source 0 - assert 1685342060.999998859, sequence: 59722 - clear  0.000000000, sequence: 0
+source 0 - assert 1685342062.000001365, sequence: 59723 - clear  0.000000000, sequence: 0
+source 0 - assert 1685342063.000002153, sequence: 59724 - clear  0.000000000, sequence: 0
+source 0 - assert 1685342064.000002046, sequence: 59725 - clear  0.000000000, sequence: 0
+source 0 - assert 1685342065.000001507, sequence: 59726 - clear  0.000000000, sequence: 0
+source 0 - assert 1685342066.000001593, sequence: 59727 - clear  0.000000000, sequence: 0
+```
+
+
 
 
 
