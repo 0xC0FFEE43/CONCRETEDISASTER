@@ -35,4 +35,21 @@ Add the following lines to the following file: /boot/config.txt
 dtoverlay=pi3-miniuart-bt # disables bluetooth
 dtoverlay=pps-gpio,gpiopin=18 # exposes pps to the kernel and sets it to GPIO pin 18
 ```
+Install updates to the system and add the following packages:
+
+```
+sudo apt get update
+sudo apt get upgrade 
+reboot # if updates were installed and applied
+sudo apt install pps-tools gpsd gpsd-clients chrony libcap-dev
+```
+Power off the RPI and attach the GPS Module to the following Pin outs on the RPI:
+
+GPS module        RPI
++---------------------+
+VCC              Pin 4 5V power
+GND              Pin 6 GND
+TXD              Pin 10 GPIO 15 UART RX
+RXD              Pin 8 GPIO 14 UART TX
+PPS              Pin 12 GPIO 18 PCM CLOCK
 
