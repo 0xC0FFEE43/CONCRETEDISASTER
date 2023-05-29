@@ -69,3 +69,30 @@ $ sudo dmesg | grep pps
 [    8.108780] pps pps0: new PPS source pps@12.-1
 [    8.111341] pps pps0: Registered IRQ 185 as PPS source
 ```
+Configure GPSd in /etc/default/gpsd:
+
+File should be there upon installation but if not create it using: ```touch gpsd```
+
+You can check ```dmesg``` to see what the gps module serial name is but generally it's going to be at /dev/ttyAMA0
+
+Config file will look like this:
+
+```
+# Devices gpsd should collect to at boot time.
+# They need to be read/writeable, either by user gpsd or the group dialout.
+DEVICES="/dev/ttyAMA0"
+START_DAEMON="true"
+
+# Other options you want to pass to gpsd
+GPSD_OPTIONS="-n"
+
+# Automatically hot add/remove USB GPS devices via gpsdctl
+USBAUTO="true"
+```
+Enable the service and start it:
+
+``` sudo systemctl enable gpsd && sudo systemctl start gpsd```
+
+
+
+
