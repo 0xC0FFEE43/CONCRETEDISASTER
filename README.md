@@ -139,7 +139,7 @@ Save the file and then run the following:
 then run the following:
 
 ```chronyc sources``` or ``` watch -n1 chronyc sources``` to watch it update in "real-time".
-After about 30sec chrony should start receiving the PPS signal the GPS signal. As shown below.
+After about 30sec chrony should start receiving the PPS signal and the GPS signal. As shown below.
 
 ```
 MS Name/IP address         Stratum Poll Reach LastRx Last sample               
