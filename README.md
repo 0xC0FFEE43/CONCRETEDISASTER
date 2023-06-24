@@ -45,6 +45,8 @@ sudo apt get upgrade
 reboot # if updates were installed and applied
 sudo apt install pps-tools gpsd gpsd-clients chrony libcap-dev
 ```
+REMEMBER TO ALLOW SERIAL DEVICE USE IN THE RASPI-CONFIG TUI APP
+
 Power off the RPI and attach the GPS Module to the following Pin outs on the RPI:
 ```
 GPS module        RPI
@@ -123,9 +125,10 @@ Add the following:
 server time-a-b.nist.gov 
 server time-e-wwv.nist.gov
 
-#config to use pps as a time source. Pulled from https://chrony.tuxfamily.org/faq.html
-refclock PPS /dev/pps0 lock NMEA refid GPS
-refclock SHM 0 offset 0.5 delay 0.1 refid NMEA # This is because the gpsd packaged version in raspian is 3.22 documentation above states this is what you need to put in for versions of gpsd below 3.25
+#GPS AND PPS CONFIG
+refclock SHM 0 refid GPS poll 3 precision 1e-3 offset 0.127
+refclock SHM 1 refid PPS poll 2 precision 1e-9 lock GPS prefer
+
 ```
 ```
 $ gpsd -V
